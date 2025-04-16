@@ -1,0 +1,44 @@
+diff --git a/QueryEngine/TableFunctions/SystemFunctions/os/GDALTableFunctions.hpp b/QueryEngine/TableFunctions/SystemFunctions/os/GDALTableFunctions.hpp
+index b5c0ea523a..939b3a7ca4 100644
+--- a/QueryEngine/TableFunctions/SystemFunctions/os/GDALTableFunctions.hpp
++++ b/QueryEngine/TableFunctions/SystemFunctions/os/GDALTableFunctions.hpp
+@@ -6,6 +6,7 @@
+ 
+ #ifndef __CUDACC__
+ 
++#include "Shared/fixautotools.h"
+ #include "QueryEngine/TableFunctions/SystemFunctions/os/Shared/TableFunctionsCommon.hpp"
+ #include "QueryEngine/heavydbTypes.h"
+ 
+diff --git a/QueryEngine/TableFunctions/SystemFunctions/os/GeoRasterTableFunctions.hpp b/QueryEngine/TableFunctions/SystemFunctions/os/GeoRasterTableFunctions.hpp
+index 35817c6a39..92f132b472 100644
+--- a/QueryEngine/TableFunctions/SystemFunctions/os/GeoRasterTableFunctions.hpp
++++ b/QueryEngine/TableFunctions/SystemFunctions/os/GeoRasterTableFunctions.hpp
+@@ -878,6 +878,7 @@ void GeoRaster<T, Z>::fill_bins_from_box_neighborhood(
+   CHECK(AggType != RasterAggType::INVALID);
+   std::vector<Z> new_z(num_bins_);
+   ComputeAgg<AggType> compute_agg;
++  (void)compute_agg;
+   tbb::parallel_for(tbb::blocked_range<int64_t>(0, num_y_bins_),
+                     [&](const tbb::blocked_range<int64_t>& r) {
+                       const int64_t end_y_bin = r.end();
+diff --git a/Tests/TestHelpers.h b/Tests/TestHelpers.h
+index a79955e1a2..889ee9bddb 100644
+--- a/Tests/TestHelpers.h
++++ b/Tests/TestHelpers.h
+@@ -16,13 +16,14 @@
+ 
+ #pragma once
+ 
++#include "Shared/fixautotools.h"
+ #include "LeafHostInfo.h"
+ #include "Logger/Logger.h"
+ #include "QueryEngine/ExecutorDeviceType.h"
+ #include "QueryEngine/TargetValue.h"
+ 
+ #include <gtest/gtest.h>
+-#include <tbb/version.h>
++// #include <tbb/version.h>
+ #include <boost/algorithm/string.hpp>
+ #include <boost/program_options.hpp>
+ #include <boost/variant.hpp>
